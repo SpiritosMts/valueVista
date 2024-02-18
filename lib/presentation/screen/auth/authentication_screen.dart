@@ -8,6 +8,8 @@ import 'package:banking/presentation/widget/components.dart';
 import 'package:banking/styles/pallet.dart';
 import 'package:banking/styles/typography.dart';
 
+import '../transactions/transaction_screen.dart';
+
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({super.key});
   static const routeName = '/authentication';
@@ -237,7 +239,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TransactionScreen(),
+                            ),
+                          );
+                        },
                         child: customText(
                           textValue: 'Forgot PassPhrase?',
                           textStyle: subHeadline5.copyWith(color: primary90),
@@ -277,28 +286,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               : pageIndex == 1
                   ? 'Log in'
                   : 'Sign Up',
-          buttonFirstGradientColor: pageIndex == 0
-              ? primary80
-              : pageIndex == 1 &&
-                      !logInControllers
-                          .every((element) => element.text.isNotEmpty)
-                  ? secondary20
-                  : (pageIndex == 2 &&
-                          !signUpControllers
-                              .every((element) => element.text.isNotEmpty))
-                      ? secondary20
-                      : primary80,
-          buttonSecondGradientColor: pageIndex == 0
-              ? primary90
-              : pageIndex == 1 &&
-                      !logInControllers
-                          .every((element) => element.text.isNotEmpty)
-                  ? secondary20
-                  : (pageIndex == 2 &&
-                          !signUpControllers
-                              .every((element) => element.text.isNotEmpty))
-                      ? secondary20
-                      : primary90,
+          buttonFirstGradientColor: primary80,
+          buttonSecondGradientColor: primary80,
           buttonWidth: MediaQuery.of(context).size.width * 0.65,
         ),
         customSpaceVertical(16),
@@ -348,13 +337,32 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
         Navigator.pop(context);
 
+       
         showSuccessDialog(context,
             message: 'Login Success',
-            onAction: () => Navigator.pushNamed(
-              context,
-              HomeScreen.routeName,
-              arguments: '123',
-            ));
+            onAction: () {
+              Navigator.pop(context);
+
+              showSuccessDialog(context,
+                  message: 'please save this passPhase it wont be shown again:',
+                  onAction: () {
+                    Navigator.pop(context);
+
+                    showSuccessDialog(context,
+                        message: 'RiverPianoSunsetWhisperJourneyStarlightGuitarHarmonyOceanAdventureMoonlight',
+                        onAction: () {
+
+                        
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(id: 123,),
+                            ),
+                          );
+                        });
+                  });
+
+            });
       //   if (user != null) {
       //     showSuccessDialog(context,
       //         message: 'Login Success',

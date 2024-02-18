@@ -74,7 +74,7 @@ class _StatusTransactionScreenState extends State<StatusTransactionScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               customText(
-                                textValue: 'Rafeh  Qazi',
+                                textValue: 'Nour Eddine Ezzine',
                                 textStyle: subHeadline4,
                               ),
                               customText(

@@ -330,7 +330,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>
                   ),
           ),
           title: customText(
-            textValue: tileIndex == 0 ? accountName : 'Rafeh Qazi',
+            textValue: tileIndex == 0 ? accountName : 'Nour Eddine Ezzine',
             textStyle: headline5,
           ),
           subtitle: customText(
@@ -386,7 +386,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>
                         style: subHeadline5.copyWith(color: text),
                         decoration: InputDecoration(
                           enabled: false,
-                          hintText: 'Bank Name',
+                          hintText: 'Receiver (Wallet Address)',
                           hintStyle: bodyText2.copyWith(color: text),
                           suffixIcon:
                               const Icon(Icons.keyboard_arrow_down_rounded),
@@ -403,25 +403,32 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>
                     TextField(
                       controller: bankNumberController,
                       style: subHeadline5.copyWith(color: text),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      onChanged: (value) {
-                        if (value.length < 12 || value.length > 12) {
-                          setState(
-                              () => errorText = 'Account number must be 12');
-                        } else {
-                          setState(() => errorText = '');
-                        }
-                      },
+                      keyboardType: TextInputType.text,
+
                       decoration: InputDecoration(
                         errorText: errorText.isEmpty ? null : errorText,
-                        hintText: 'Account Number',
+                        hintText: 'My Wallet Address',
                         hintStyle: bodyText2.copyWith(color: text),
                         border: const UnderlineInputBorder(
                           borderSide: BorderSide(color: secondary20),
                         ),
                       ),
                     ),
+                    customSpaceVertical(16),
+                    TextField(
+                      style: subHeadline5.copyWith(color: text),
+                      keyboardType: TextInputType.text,
+
+                      decoration: InputDecoration(
+                        errorText: errorText.isEmpty ? null : errorText,
+                        hintText: 'Amount',
+                        hintStyle: bodyText2.copyWith(color: text),
+                        border: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: secondary20),
+                        ),
+                      ),
+                    ),
+
                   ],
                 );
               default:
@@ -492,9 +499,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>
                   Navigator.pop(context);
                   Future.delayed(const Duration(seconds: 2), () {
                     Navigator.pop(context);
-                  }).then((value) => Navigator.pushNamed(
+                  }).then((value) {
+                    return Navigator.pushNamed(
                       context, StatusTransactionScreen.routeName,
-                      arguments: transactionStatus));
+                      arguments: transactionStatus);
+                  });
                   customDialog(
                     context,
                     animationIcon: 'lib/assets/lotties/lottieSuccess.json',
@@ -508,30 +517,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>
       },
       buttonText: pageIndex == 0 ? 'Next' : 'Confirm',
       buttonWidth: MediaQuery.of(context).size.width,
-      buttonFirstGradientColor: pageIndex == 0 &&
-              bankNameController.text.isNotEmpty &&
-              bankNumberController.text.isNotEmpty &&
-              errorText.isEmpty
-          ? primary80
-          : (pageIndex == 1 &&
-                  transferController.text.isNotEmpty &&
-                  transferErrorText.isEmpty &&
-                  typeErrorText.isEmpty &&
-                  noteErrorText.isEmpty)
-              ? primary80
-              : secondary20,
-      buttonSecondGradientColor: pageIndex == 0 &&
-              bankNameController.text.isNotEmpty &&
-              bankNumberController.text.isNotEmpty &&
-              errorText.isEmpty
-          ? primary90
-          : (pageIndex == 1 &&
-                  transferController.text.isNotEmpty &&
-                  transferErrorText.isEmpty &&
-                  typeErrorText.isEmpty &&
-                  noteErrorText.isEmpty)
-              ? primary90
-              : secondary20,
+      buttonFirstGradientColor: primary80,
+      buttonSecondGradientColor: primary80,
     );
   }
 
